@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -16,19 +17,10 @@ const listingRouter = require("./routes/listing");
 const reviewRouter = require("./routes/review");
 const userRouter = require("./routes/user")
 
+mongoose.connect(process.env.MONGO_URL)
+    .then(() => console.log("MongoDB Connected"))
+    .catch(err => console.log(err));
 
-const mongo_URL = "mongodb://localhost:27017/wanderlust";
-
-main().then(() => {
-        console.log("connected to db");
-    })
-    .catch((err) => {
-        console.log(err);
-    })
-
-async function main() {
-    await mongoose.connect(mongo_URL);
-}
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
